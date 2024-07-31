@@ -1,0 +1,59 @@
+1.0.6
+- Solve the canvas exit on mouse down issue
+- Solve the blurry text issue
+- remove utest. migrate all testcases. exception scalajs module
+- remove obsolete tryouts
+-- name of modules start all with doctus-showcase...
+-- packages: uniform structure
+-- name of classes and file: uniform structure. Principle: technical before usage.
+- Implementation of the doctus sound interface
+- Check the reason for the yellow border on the animation showcase
+
+closed
+- Solve the wrong point position if canvas is not fullscreen in the browser
+- sbt: change to build.sbt from scala file
+- uniform structure for showcase
+- Integrate JavaFX
+- switch from scala build file to build.sbt in myDoctus
+- Deploy showcases on entelijan for verifying Browser features http://entelijan.net/doctusshowcase/
+
+
+
+Sound integration
+- https://github.com/processing/processing-sound using methcla http://methc.la/
+- http://www.softsynth.com/jsyn/beta/index.php
+- http://www.beadsproject.net/
+- http://code.compartmental.net/tools/minim/
+- https://github.com/processing/processing-sound using methcla
+
+
+Bluriness
+var PIXEL_RATIO = (function () {
+    var ctx = document.createElement("canvas").getContext("2d"),
+        dpr = window.devicePixelRatio || 1,
+        bsr = ctx.webkitBackingStorePixelRatio ||
+              ctx.mozBackingStorePixelRatio ||
+              ctx.msBackingStorePixelRatio ||
+              ctx.oBackingStorePixelRatio ||
+              ctx.backingStorePixelRatio || 1;
+
+    return dpr / bsr;
+})();
+
+
+createHiDPICanvas = function(w, h, ratio) {
+    if (!ratio) { ratio = PIXEL_RATIO; }
+    var can = document.createElement("canvas");
+    can.width = w * ratio;
+    can.height = h * ratio;
+    can.style.width = w + "px";
+    can.style.height = h + "px";
+    can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+    return can;
+}
+
+//Create canvas with the device resolution.
+var myCanvas = createHiDPICanvas(500, 250);
+
+//Create canvas with a custom resolution.
+var myCustomCanvas = createHiDPICanvas(500, 200, 4);

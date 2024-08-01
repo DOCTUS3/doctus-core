@@ -49,7 +49,7 @@ case class DoctusTemplateController[T <: DoctusTemplate](
   if (template.frameRate.isDefined) {
     val fr = template.frameRate.get
     require(fr > 0)
-    sched.start(canvas.repaint, (1000.0 / fr).toInt)
+    sched.start(() => canvas.repaint(), (1000.0 / fr).toInt)
   }
 
   canvas.onRepaint(template.draw)

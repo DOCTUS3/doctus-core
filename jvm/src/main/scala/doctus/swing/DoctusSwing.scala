@@ -285,7 +285,7 @@ object DoctusSwingComponentFactory {
 case class DoctusCanvasSwing(comp: DoctusSwingComponent)
     extends DoctusCanvasSwing1
 
-//noinspection ScalaUnusedSymbol
+//noinspection ScalaUnusedtest
 case class DoctusTemplateCanvasSwing(comp: DoctusSwingComponent)
     extends DoctusTemplateCanvas
     with DoctusCanvasSwing1
@@ -294,7 +294,7 @@ case class DoctusTemplateCanvasSwing(comp: DoctusSwingComponent)
 
 case class DoctusPointableSwing(comp: Component) extends DoctusPointableSwing1
 
-//noinspection ScalaUnusedSymbol
+//noinspection ScalaUnusedtest
 case class DoctusDraggableSwing(comp: Component)
     extends DoctusDraggableSwing1
     with DoctusDraggable
@@ -338,7 +338,7 @@ case object DoctusSchedulerSwing extends DoctusScheduler {
 
 }
 
-//noinspection ScalaUnusedSymbol
+//noinspection ScalaUnusedtest
 case class DoctusTextSwing(textComp: JTextComponent) extends DoctusText {
 
   def text: String = {
@@ -350,10 +350,10 @@ case class DoctusTextSwing(textComp: JTextComponent) extends DoctusText {
   }
 }
 
-//noinspection ScalaUnusedSymbol
+//noinspection ScalaUnusedtest
 object DoctusActivatableSwingKey {
 
-  // noinspection ScalaUnusedSymbol
+  // noinspection ScalaUnusedtest
   implicit class Implicit(c: Component) {
 
     /** Convenience function for gaining the focus of a component. Consider
@@ -402,7 +402,7 @@ object DoctusActivatableSwingKey {
   * focus. You may use 'requestFocusForDoctusActivatableSwingKey' as for
   * convenience.
   */
-//noinspection ScalaUnusedSymbol
+//noinspection ScalaUnusedtest
 case class DoctusKeySwing(comp: Component) extends DoctusKeySwing1
 
 case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0)
@@ -424,7 +424,7 @@ case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0)
 
 }
 
-//noinspection ScalaUnusedSymbol
+//noinspection ScalaUnusedtest
 class DoctusSelectSwingList[C](
     val list: JList[String]
 ) extends DoctusSelect[C] {
@@ -469,7 +469,7 @@ class DoctusSelectSwingList[C](
 
 }
 
-//noinspection ScalaUnusedSymbol
+//noinspection ScalaUnusedtest
 class DoctusSelectSwingComboBox[C](
     val comboBox: JComboBox[String]
 ) extends DoctusSelect[C] {

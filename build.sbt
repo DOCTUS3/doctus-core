@@ -1,4 +1,4 @@
-ThisBuild / scalaVersion := "2.13.14"
+ThisBuild / scalaVersion := "3.4.2"
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 
@@ -17,8 +17,8 @@ lazy val doctusCore = crossProject(JSPlatform, JVMPlatform).in(file(".")).
     licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
     testFrameworks += new TestFramework("utest.runner.Framework"),
     scalacOptions ++= Seq(
-      "-Wunused",
-      // "-deprecation",
+      "-Wunused:all",
+      "-deprecation",
     )
 
   ).
@@ -30,5 +30,5 @@ lazy val doctusCore = crossProject(JSPlatform, JVMPlatform).in(file(".")).
   ).
   jsSettings(
     libraryDependencies += "com.lihaoyi" %%% "utest" % utestVersion % "test",
-    libraryDependencies += "be.doeraene" %%% "scalajs-jquery" % scalaJsJqueryVersion,
+    libraryDependencies += "org.querki" %%% "jquery-facade" % "2.1",
   )

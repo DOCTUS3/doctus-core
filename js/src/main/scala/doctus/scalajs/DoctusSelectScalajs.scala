@@ -1,7 +1,7 @@
 package doctus.scalajs
 
 import doctus.core.comp.{DoctusSelect, SelectItemDescription}
-import org.scalajs.jquery._
+import org.querki.jquery._
 
 /** Uses a HTML select box in combination with jQuery The default mapping is the
   * toString mapping
@@ -35,7 +35,7 @@ case class DoctusSelectScalajs[T](
       (item, s"$posi ${render(item)}")
     }
 
-    val v1 = jQuery("<option/>")
+    val v1 = JQueryStatic("<option/>")
     for ((item, label) <- entries) {
       val optionElem = v1.attr("value", value).html(label)
       selectBox.append(optionElem)

@@ -6,11 +6,10 @@ import doctus.core.template.DoctusTemplateCanvas
 import doctus.core.util.DoctusPoint
 import doctus.scalajs.impl._
 import org.scalajs.dom
-import org.scalajs.dom.raw._
 
 import scala.scalajs.js.Any._
 
-case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D)
+case class DoctusGraphicsScalajs(ctx: dom.CanvasRenderingContext2D)
     extends DoctusGraphics {
 
   private var isFill = true
@@ -81,7 +80,7 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D)
         cy: Double,
         rx: Double,
         ry: Double,
-        commit: CanvasRenderingContext2D => Unit
+        commit: dom.CanvasRenderingContext2D => Unit
     ): Unit = {
       ctx.save()
       ctx.beginPath()
@@ -95,7 +94,7 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D)
         x: Double,
         y: Double,
         r: Double,
-        commit: CanvasRenderingContext2D => Unit
+        commit: dom.CanvasRenderingContext2D => Unit
     ): Unit = {
       ctx.beginPath()
       ctx.arc(x, y, r, 0, math.Pi * 2)
@@ -194,7 +193,7 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D)
           val im = this.imageMode
           i.image.addEventListener(
             "load",
-            (_: Event) => {
+            (_: dom.Event) => {
               try {
                 ctx.scale(i.scaleFactor, i.scaleFactor)
                 ctx.globalAlpha = 255
@@ -217,7 +216,7 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D)
   }
 }
 
-case class DoctusTemplateCanvasScalajs(elem: HTMLCanvasElement)
+case class DoctusTemplateCanvasScalajs(elem: dom.HTMLCanvasElement)
     extends DoctusTemplateCanvas
     with DoctusCanvasScalajs1
     with DoctusDraggableScalajs1
@@ -225,21 +224,21 @@ case class DoctusTemplateCanvasScalajs(elem: HTMLCanvasElement)
 
 /** Implementation using a HTML5 canvas
   */
-case class DoctusCanvasScalajs(elem: HTMLCanvasElement)
+case class DoctusCanvasScalajs(elem: dom.HTMLCanvasElement)
     extends DoctusCanvasScalajs1
 
-case class DoctusPointableScalajs(elem: HTMLElement)
+case class DoctusPointableScalajs(elem: dom.HTMLElement)
     extends DoctusPointableScalajs1
 
-case class DoctusDraggableScalajs(elem: HTMLElement)
+case class DoctusDraggableScalajs(elem: dom.HTMLElement)
     extends DoctusDraggableScalajs1
 
 case class DoctusImageScalajs(path: String, scaleFactor: Double = 1.0)
     extends DoctusImage {
 
-  val image: HTMLImageElement = {
+  val image: dom.HTMLImageElement = {
     val _image =
-      dom.document.createElement("img").asInstanceOf[HTMLImageElement]
+      dom.document.createElement("img").asInstanceOf[dom.HTMLImageElement]
     _image.src = path
     _image
   }
@@ -252,7 +251,7 @@ case class DoctusImageScalajs(path: String, scaleFactor: Double = 1.0)
     DoctusImageScalajs(path, scaleFactor * factor)
 
 }
-case class DoctusActivatableScalajs(elem: HTMLElement)
+case class DoctusActivatableScalajs(elem: dom.HTMLElement)
     extends DoctusActivatable {
 
   private val p = DoctusPointableScalajs(elem)
@@ -262,14 +261,14 @@ case class DoctusActivatableScalajs(elem: HTMLElement)
 
 }
 
-case class DoctusTextScalajs(elem: Element) extends DoctusText {
+case class DoctusTextScalajs(elem: dom.Element) extends DoctusText {
 
   def text: String = {
     elem.textContent
   }
 
   def text_=(txt: String): Unit = {
-    val node: Node = elem.childNodes(0)
+    val node: dom.Node = elem.childNodes(0)
     node.textContent = txt
   }
 }
@@ -307,4 +306,4 @@ case object DoctusSchedulerScalajs extends DoctusScheduler {
 
 }
 
-case class DoctusKeyScalajs(elem: Element) extends DoctusKeyScalajs1
+case class DoctusKeyScalajs(elem: dom.Element) extends DoctusKeyScalajs1

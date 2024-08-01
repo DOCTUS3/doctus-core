@@ -1,8 +1,5 @@
 package doctus.scalajs.impl
 
-import scala.scalajs.js.Any.fromFunction1
-
-import org.scalajs.dom.raw._
 import org.scalajs.dom
 
 import doctus.core._
@@ -11,13 +8,13 @@ import doctus.scalajs._
 
 private[scalajs] trait DoctusCanvasScalajs1 extends DoctusCanvas {
 
-  dom.window.addEventListener("load", (_: Event) => repaint())
+  dom.window.addEventListener("load", (_: dom.Event) => repaint())
 
-  dom.window.addEventListener("resize", (_: Event) => repaint())
+  dom.window.addEventListener("resize", (_: dom.Event) => repaint())
 
-  def elem: HTMLCanvasElement
+  def elem: dom.HTMLCanvasElement
 
-  private val ctx = elem.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
+  private val ctx = elem.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
   ctx.translate(0.5, 0.5)
 
   var fopt: Option[DoctusGraphics => Unit] = None
@@ -41,9 +38,9 @@ private[scalajs] trait DoctusDraggableScalajs1
 
 private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
-  def elem: HTMLElement
+  def elem: dom.HTMLElement
 
-  def scrollTopLeft(elem: HTMLElement): (Double, Double) = {
+  def scrollTopLeft(elem: dom.HTMLElement): (Double, Double) = {
     if (elem.localName.equals("html")) (elem.scrollTop, elem.scrollLeft)
     else
       scrollTopLeft(elem.parentElement) match {
@@ -57,11 +54,11 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
   elem.addEventListener(
     "mousedown",
-    (e: Event) => {
+    (e: dom.Event) => {
       // 'mousedown' always produces a MouseEvent
       // Patternmatching can cause problems
       mousedown = true
-      val me = e.asInstanceOf[MouseEvent]
+      val me = e.asInstanceOf[dom.MouseEvent]
       e.preventDefault()
       em.addEvent(MouseDown(point(me)))
     }
@@ -69,9 +66,9 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
   elem.addEventListener(
     "mouseout",
-    (e: Event) => {
+    (e: dom.Event) => {
       // 'mouseup' always produces a MouseEvent
-      val me = e.asInstanceOf[MouseEvent]
+      val me = e.asInstanceOf[dom.MouseEvent]
       e.preventDefault()
       if (mousedown) {
         mousedown = false
@@ -82,10 +79,10 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
   elem.addEventListener(
     "mouseup",
-    (e: Event) => {
+    (e: dom.Event) => {
       // 'mouseup' always produces a MouseEvent
       mousedown = false
-      val me = e.asInstanceOf[MouseEvent]
+      val me = e.asInstanceOf[dom.MouseEvent]
       e.preventDefault()
       em.addEvent(MouseUp(point(me)))
     }
@@ -93,9 +90,9 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
   elem.addEventListener(
     "mousemove",
-    (e: Event) => {
+    (e: dom.Event) => {
       // 'mousemove' always produces a MouseEvent
-      val me = e.asInstanceOf[MouseEvent]
+      val me = e.asInstanceOf[dom.MouseEvent]
       e.preventDefault()
       em.addEvent(MouseMove(point(me)))
     }
@@ -103,10 +100,10 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
   elem.addEventListener(
     "touchstart",
-    (e: Event) => {
+    (e: dom.Event) => {
       // 'touchstart' always produces a TouchEvent
       mousedown = true
-      val te = e.asInstanceOf[TouchEvent]
+      val te = e.asInstanceOf[dom.TouchEvent]
       e.preventDefault()
       em.addEvent(TouchStart(idpoints(te)))
     }
@@ -114,10 +111,10 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
   elem.addEventListener(
     "touchend",
-    (e: Event) => {
+    (e: dom.Event) => {
       // 'touchstart' always produces a TouchEvent
       mousedown = false
-      val te = e.asInstanceOf[TouchEvent]
+      val te = e.asInstanceOf[dom.TouchEvent]
       e.preventDefault()
       em.addEvent(TouchEnd(idpoints(te)))
     }
@@ -125,9 +122,9 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
   elem.addEventListener(
     "touchmove",
-    (e: Event) => {
+    (e: dom.Event) => {
       // 'touchstart' always produces a TouchEvent
-      val te = e.asInstanceOf[TouchEvent]
+      val te = e.asInstanceOf[dom.TouchEvent]
       e.preventDefault()
       em.addEvent(TouchMove(idpoints(te)))
     }
@@ -141,17 +138,17 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
     em.onStop(f)
   }
 
-  private def point(m: MouseEvent): DoctusPoint = {
+  private def point(m: dom.MouseEvent): DoctusPoint = {
     val (st, sl) = scrollTopLeft(elem)
     val x = m.clientX - elem.offsetLeft + sl - 1
     val y = m.clientY - elem.offsetTop + st - 1
     DoctusPoint(x, y)
   }
 
-  private def idpoints(te: TouchEvent): List[DoctusIdPoint] = {
+  private def idpoints(te: dom.TouchEvent): List[DoctusIdPoint] = {
     val tl = te.targetTouches
     (for (i <- 0 until tl.length.intValue) yield {
-      val t: Touch = tl(i)
+      val t: dom.Touch = tl(i)
       val x = t.clientX - elem.offsetLeft - 1
       val y = t.clientY - elem.offsetTop - 1
       DoctusIdPoint(t.identifier, DoctusPoint(x, y))
@@ -162,16 +159,16 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
 trait DoctusKeyScalajs1 extends DoctusKey {
 
-  def elem: Element
+  def elem: dom.Element
 
   private def mapKeyCode(code: Int): Option[DoctusKeyCode] = {
 
-    if (org.scalajs.dom.ext.KeyCode.Down == code) Some(DKC_Down)
-    else if (org.scalajs.dom.ext.KeyCode.Up == code) Some(DKC_Up)
-    else if (org.scalajs.dom.ext.KeyCode.Right == code) Some(DKC_Right)
-    else if (org.scalajs.dom.ext.KeyCode.Left == code) Some(DKC_Left)
-    else if (org.scalajs.dom.ext.KeyCode.Space == code) Some(DKC_Space)
-    else if (org.scalajs.dom.ext.KeyCode.Enter == code) Some(DKC_Enter)
+    if (org.scalajs.dom.KeyCode.Down == code) Some(DKC_Down)
+    else if (org.scalajs.dom.KeyCode.Up == code) Some(DKC_Up)
+    else if (org.scalajs.dom.KeyCode.Right == code) Some(DKC_Right)
+    else if (org.scalajs.dom.KeyCode.Left == code) Some(DKC_Left)
+    else if (org.scalajs.dom.KeyCode.Space == code) Some(DKC_Space)
+    else if (org.scalajs.dom.KeyCode.Enter == code) Some(DKC_Enter)
     else None
   }
 
@@ -182,8 +179,8 @@ trait DoctusKeyScalajs1 extends DoctusKey {
 
   dom.window.addEventListener(
     "keydown",
-    (e: Event) => {
-      val kevent: KeyboardEvent = e.asInstanceOf[KeyboardEvent]
+    (e: dom.Event) => {
+      val kevent: dom.KeyboardEvent = e.asInstanceOf[dom.KeyboardEvent]
       if (!active) mapKeyCode(kevent.keyCode) match {
         case Some(key) =>
           e.preventDefault()
@@ -197,8 +194,8 @@ trait DoctusKeyScalajs1 extends DoctusKey {
 
   dom.window.addEventListener(
     "keyup",
-    (e: Event) => {
-      val kevent: KeyboardEvent = e.asInstanceOf[KeyboardEvent]
+    (e: dom.Event) => {
+      val kevent: dom.KeyboardEvent = e.asInstanceOf[dom.KeyboardEvent]
       if (active) mapKeyCode(kevent.keyCode) match {
         case Some(key) =>
           e.preventDefault()

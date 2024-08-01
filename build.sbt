@@ -18,7 +18,7 @@ lazy val doctusCore = crossProject(JSPlatform, JVMPlatform).in(file(".")).
     testFrameworks += new TestFramework("utest.runner.Framework"),
     scalacOptions ++= Seq(
       "-Wunused",
-      // "-deprecation",
+      "-deprecation",
     )
 
   ).
@@ -30,5 +30,5 @@ lazy val doctusCore = crossProject(JSPlatform, JVMPlatform).in(file(".")).
   ).
   jsSettings(
     libraryDependencies += "com.lihaoyi" %%% "utest" % utestVersion % "test",
-    libraryDependencies += "be.doeraene" %%% "scalajs-jquery" % scalaJsJqueryVersion,
+    libraryDependencies += "org.querki" %%% "jquery-facade" % "2.1",
   )

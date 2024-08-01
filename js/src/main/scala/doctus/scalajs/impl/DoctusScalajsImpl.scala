@@ -14,7 +14,8 @@ private[scalajs] trait DoctusCanvasScalajs1 extends DoctusCanvas {
 
   def elem: dom.HTMLCanvasElement
 
-  private val ctx = elem.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
+  private val ctx =
+    elem.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
   ctx.translate(0.5, 0.5)
 
   var fopt: Option[DoctusGraphics => Unit] = None

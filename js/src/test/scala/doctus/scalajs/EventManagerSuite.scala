@@ -7,9 +7,9 @@ object EventManagerSuite extends TestSuite {
 
   class Collector {
     private var result = List.empty[Char]
-    def a(@annotation.nowarn p: DoctusPoint): Unit = result ::= 'A'
-    def b(@annotation.nowarn p: DoctusPoint): Unit = result ::= 'B'
-    def c(@annotation.nowarn p: DoctusPoint): Unit = result ::= 'C'
+    def a(p: DoctusPoint): Unit = result ::= 'A'
+    def b(p: DoctusPoint): Unit = result ::= 'B'
+    def c(p: DoctusPoint): Unit = result ::= 'C'
     def resultString: String = result.reverse.mkString("")
   }
 
